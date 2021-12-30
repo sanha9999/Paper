@@ -7,12 +7,15 @@ Faster R-CNN은 Region proposal algorithm을 통해 새로운 접근법을 제�
 
 ### 도표 보기
 ![](https://images.velog.io/images/sanha9999/post/d672f682-923d-43aa-bd72-f68830311fb3/image.png)
+
 Faster R-CNN은 다양한 규모와 크기를 다루기 위해 여러 체계를 사용한다. (a)는 이미지 및 feature map의 피라미드가 구축되고 분류기가 실행되고, (b)는 여러 크기를 가진 필터로 feature map을 만드는 것이고, (c)는 회귀 함수에 reference boxes의 피라미드를 사용한다.
 
 ![](https://images.velog.io/images/sanha9999/post/249eaac6-f79a-4f71-95b4-bd7de3888ea7/image.png) 
+
 Faster R-CNN은 YOLO와 마찬가지로 한 개의 통합적인 network로 이루어져있다. Fast R-CNN과 다른점은 RPN이 추가되었다는 정도이다. 그렇다면 RPN은 무엇인가?
 
 ![](https://images.velog.io/images/sanha9999/post/3f514424-fe43-4edb-8ac3-33f953ad03ac/image.png)
+
 위의 그림이 Region Proposal Network(RPN)의 구조이다. Conv layer를 통해 뽑아낸 feature map을 입력으로 받고, 이 받은 feature map에 3 * 3 convolution을 수행한다. 그리고 2번째 feature map을 통해 Classification과 box regression 예측 값을 계산한다.
 
 ### 결론
