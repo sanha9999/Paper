@@ -1,9 +1,7 @@
 import math
-from turtle import forward
 import torch
 import torch.nn.functional as F
 from torch import nn
-import torchvision.models as models
 
 class ResidualBlock(nn.Module):
     def __init__(self, channels):
@@ -62,4 +60,44 @@ class Generator(nn.Module):
         block7 = self.block7(block6)
         block8 = self.block8(block1 + block7)
 
-        return (torch.tanh(block8 + 1)) / 2
+        return (torch.tanh(block8 + 1)) / 2 # [-1, 1]로 사전 스케일링
+
+class Discriminator(nn.Module):
+    def __init__(self):
+        super(Discriminator, self).__init__()
+        self.net = nn.Sequential(
+            nn.Conv2d(3, 64, kernel_size=3, padding = 1),
+            nn.LeakyReLU(0.2),
+
+            nn.Conv2d(64, 64, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2),
+
+            nn.Conv2d(64, 128, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(128),
+            nn.LeakyReLU(0.2),
+
+            nn.Conv2d(128, 256, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(256),
+            nn.LeakyReLU(0.2),
+
+            nn.Conv2d(256, 256, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(256),
+            nn.LeakyReLU(0.2),
+            nn.Conv2d(256, 512, kernel_size=3, padding=1),
+            nn.BatchNorm2d(512),
+            nn.LeakyReLU(0.2),
+
+            nn.Conv2d(512, 512, kernel_size=3, stride=2, padding=1),
+            nn.BatchNorm2d(512),
+            nn.LeakyReLU(0.2),
+
+            nn.AdaptiveAvgPool2d(1),
+            nn.Conv2d(512, 1024, kernel_size=1),
+            nn.LeakyReLU(0.2),
+            nn.Conv2d(1024, 1, kernel_size=1)
+        )
+
+        def forward(self, x):
+            batch_size = x.size(0)
+            return torch.sigmoid(self.net(x).view(batch_size))
