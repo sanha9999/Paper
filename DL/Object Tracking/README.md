@@ -29,4 +29,16 @@ Background Subtraction은 배경 제거 기법이다. 이 배경 제거 기법�
 #### Recursive Techniques
 이 기술에서는 각 입력 프레임을 기반으로 모델을 반복적으로 업데이트하고 배경 추정을 위한 버퍼는 유지하지 않는 기법이다. 이 기법은 approximate median, adaptive background, Gaussian mixture 같은 다양한 방법을 포함한다.
 #### Non-Recursive Techniques
-이 기술은 L개의 비디오 프레임을 저장한 버퍼 내에서 각 픽셀의 시간적 변화를 기반으로 슬라이딩 원도우 알고리즘으로 접근하는 기술이다.
+이 기술은 L개의 비디오 프레임을 저장한 버퍼 내에서 각 픽셀의 시간적 변화를 기반으로 슬라이딩 원도우 알고리즘으로 접근하는 기술이다. 
+
+## Object Tracking Method
+Tracking method는 물체가 장면을 이동할 떄 궤적을 추정하는 문제로 정의할 수 있다. Point tracking, kernel tracking 그리고 silhouette tracking과 같은 다양한 방식이 객체 추적을 위한 방법이다.
+
+### A. Point based Tracking
+image structure에서 움직이는 객체는 tracking중에 feature point로 나타낼 수 있다. Point based Tracking approaches는 아래와 같다.
+
+#### Kalman Filter
+위키백과를 보면 칼만 필터는 잡음이 포함되어 있는 측정치를 바탕으로 선형 역학계의 상태를 추정하는 재귀 필터로, 루돌프 칼만이 개발하였다고 한다. 재귀 필터이기 때문에 과거에 수행한 측정값을 바탕으로 현재의 상태 변수의 결합분포를 추정한다. 칼만 필터는 항상 최적의 솔루션을 제공한다고 한다.
+
+#### Particle Filter
+파티클 필터는 다음 변수로 이동하기 전에 한 변수에 대한 모든 model을 생성하는 필터이다. 이 알고리즘은 변수를 동적으로 생성할 때 장점이 있으며 무한이 많은 변수를 다룰 수 있다고 한다.
